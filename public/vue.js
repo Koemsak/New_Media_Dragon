@@ -1,6 +1,6 @@
 
 const PORT = 3000;
-const URL_REQUEST = "http://localhost" + ":" + PORT;
+const URL_REQUEST = "https://mydragon.herokuapp.com";
 
 new Vue ({
     el: "#app",
