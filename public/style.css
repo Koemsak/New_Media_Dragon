@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Bad+Script&family=Zen+Tokyo+Zoo&display=swap');
+/* body {
+    background-image: url('https://buffer.com/cdn-cgi/image/w=1000,fit=contain,q=90,f=auto/library/content/images/size/w1200/2020/06/Frame-22.png');
+    background-size: cover;
+    background-attachment: fixed;
+} */
+.logout {
+    cursor: pointer;
+}
+.card {
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.empty {
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.status {
+    background: linear-gradient(217deg, rgba(54, 0, 0, 0.384), rgba(255,0,0,0) 70.71%),
+            linear-gradient(127deg, rgba(67, 25, 255, 0.603), rgba(0,255,0,0) 70.71%),
+            linear-gradient(336deg, rgba(199, 14, 255, 0.8), rgba(0,0,255,0) 70.71%);
+    padding: 80px;
+}

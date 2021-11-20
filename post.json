@@ -1,0 +1,82 @@
+[
+    {
+        "id": 16,
+        "author": "Koemsak",
+        "date": "Saturday, November 20 2021, 10:50",
+        "description": "Today is so cool.",
+        "image": "",
+        "userLike": []
+    },
+    {
+        "id": 15,
+        "author": "Koemsak",
+        "date": "Saturday, November 20 2021, 10:35",
+        "description": "Today is a special day. I will make you happy, so please trust me. OK?",
+        "image": "",
+        "userLike": []
+    },
+    {
+        "id": 14,
+        "author": "Koemsak",
+        "date": "Saturday, November 20 2021, 10:32",
+        "description": "",
+        "image": "coffee-1580595_960_720.jpg",
+        "userLike": []
+    },
+    {
+        "id": 13,
+        "author": "Koemsak",
+        "date": "Friday, November 19 2021, 14:3",
+        "description": "Good morning sir.\nHow are you today?",
+        "image": "",
+        "userLike": []
+    },
+    {
+        "id": 12,
+        "author": "Koemsak",
+        "date": "Friday, November 19 2021, 14:1",
+        "description": "Welcome",
+        "image": "Computer.jpg",
+        "userLike": []
+    },
+    {
+        "id": 11,
+        "author": "Koemsak",
+        "date": "Friday, November 19 2021, 13:53",
+        "description": "",
+        "image": "Car.jpg",
+        "userLike": []
+    },
+    {
+        "id": 10,
+        "author": "Koemsak",
+        "date": "Friday, November 19 2021, 13:53",
+        "description": "",
+        "image": "Galaxy_Water.jpg",
+        "userLike": []
+    },
+    {
+        "id": 9,
+        "author": "Bunsal",
+        "date": "Friday, November 19 2021, 13:32",
+        "description": "Hi! Welcome to my status. Today I want to show you what I have done on my project.",
+        "image": "",
+        "userLike": []
+    },
+    {
+        "id": 7,
+        "author": "Koemsak",
+        "date": "Friday, November 19 2021, 13:30",
+        "description": "",
+        "image": "blueberries-2278921_960_720.jpg",
+        "userLike": []
+    },
+    {
+        "id": 6,
+        "author": "Koemsak",
+        "date": "Friday, November 19 2021, 12:20",
+        "description": "",
+        "image": "relaxing-1979674_960_720.jpg",
+        "userLike": []
+    }
+]

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Dragon</title>
+
+    <link rel="shortcut icon" href="https://cdn.pixabay.com/photo/2018/03/18/01/46/dragon-eye-3235673__340.png"
+        type="image/x-icon">
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="vue.js" defer></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+
+<body style="background-color: #5478f0d5;">
+    <div id="app">
+        <div v-if="!isLogin" class="login m-auto row mt-5 w-50 p-5 rounded">
+            <div class="col mt-5 p-5 rounded bg-white">
+                <div class="d-flex align-items-center">
+                    <img src="https://cdn.pixabay.com/photo/2018/03/18/01/46/dragon-eye-3235673__340.png"
+                        class="img-fluid rounded rounded-circle w-25 h-25" alt="">
+                    <h1 class="mb-4 text-danger text-center" style="font-family: 'Bad Script', cursive;">Media Dragon
+                    </h1>
+                </div>
+
+                <form @submit="userLogin" action="#">
+                    <input type="text" class="bg-transparent p-3 form-control" placeholder="Username" v-model="author"
+                        required>
+                    <input type="submit" class="form-control btn btn-primary mt-2" value="LOGIN">
+                </form>
+            </div>
+        </div>
+
+        <div v-else>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4 position-sticky sticky-top">
+                <i class="navbar-brand text-monospace"> {{currentAuthor}} </i>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+                    aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarText">
+                    <ul class="navbar-nav m-auto">
+                        <li class="nav-item active">
+                            <a href="#" class="nav-link mr-3 ml-3 font-weight-normal rounded " :class="action === 'all'? 'bg-warning' : '' " @click="getAll">ALL</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a href="#" class="nav-link mr-3 ml-3 font-weight-normal rounded" :class="action === 'status'? 'bg-warning' : '' " @click="getStatus">STATUS</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a href="#" class="nav-link mr-3 ml-3 font-weight-bolder" data-toggle="modal"
+                                data-target="#exampleModalCenter" @click="createClick">CREATE POST</a>
+                        </li>
+                    </ul>
+                    <form class="form-inline my-2 my-lg-0">
+                        <span @click="userLogout" class="logout navbar-text text-decoration-none">
+                            LOGOUT
+                        </span>
+                    </form>
+                </div>
+            </nav>
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">CREATE POST</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="text_img">
+                                <textarea name="" id="" class="form-control border-0" v-model="description"
+                                    placeholder="What do you want to say ?"></textarea>
+                                <div class="img" v-if="img !== null">
+                                    <img :src="/images/ + img" class="img-fluid" alt="">
+                                </div>
+
+                                <label for="image" class="mt-2">
+                                    <i class="fa fa-picture-o btn btn-primary"></i>
+                                </label>
+                                <input type="file" id="image" ref="file" class="d-none" @change="getImage">
+                                <button v-if="discarded" class="btn btn-danger ml-2" @click="discard">Discard</button>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button v-if="updateDelete" @click="addInformation" type="button"
+                                class="form-control btn btn-secondary" data-dismiss="modal">POST</button>
+                            <button v-else @click="updateList" type="button" class="form-control btn btn-success"
+                                data-dismiss="modal">UPDATE</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div>
+                <div class="text-center p-5 mt-5" v-if="lists.length === 0">
+                    <h3 class="text-muted empty">Sorry 🙏 There is no post here ! 😒😒</h3>
+                </div>
+
+                <div v-else class="card w-50 p-2" v-for="(list, index) in lists" :key="index">
+                    <div class="card-body">
+                        <div class="card-title d-flex justify-content-between">
+                            <h5> {{list.author}} </h5>
+                            <div v-if="currentAuthor === list.author">
+
+                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to
+                                                    delete this?</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <!-- <div class="modal-body">
+                                    
+                                    </div> -->
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">No</button>
+                                                <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                                    @click="deleteList">Yes</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button class="btn btn-danger fa fa-trash float-right" data-toggle="modal"
+                                    data-target="#exampleModal" @click="clickDelete(list)"></button>
+                                <button class="btn btn-success fa fa-pencil float-right mr-2" @click="editList(list)"
+                                    data-toggle="modal" data-target="#exampleModalCenter"></button>
+                            </div>
+                        </div>
+                        <h6 class="card-subtitle mb-2 text-muted"> {{list.date}} </h6>
+
+                        <div class="text">
+                            <p class="card-text" v-if="list.image !== '' "> {{list.description}} </p>
+                            <h1 class="card-text text-center font-weight-light rounded text-light status" v-else> {{list.description}} </h1>
+                        </div>
+                            
+
+                    </div>
+                    <img class="card-img-top" :src="/images/ + list.image" alt="">
+                    <div class="card-footer row">
+                        <div class="col-sm-4">
+                            <p class="ml-1 text-primary">10K</p>
+                            <button class="btn btn-outline-primary fa fa-thumbs-o-up"></button>
+                        </div>
+                        <div class="col-sm-4 text-center">
+                            <p class="text-center text-primary">5K</p>
+                            <button class="btn btn-outline-info fa fa-commenting-o text-center w-75"></button>
+                        </div>
+                        <div class="col-sm-4">
+                            <p class="d-flex justify-content-end mr-2 text-primary">3K</p>
+                            <button class="btn btn-outline-primary fa fa-thumbs-o-down float-right"></button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+
+</body>
+
+</html>
