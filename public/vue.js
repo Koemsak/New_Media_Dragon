@@ -1,6 +1,6 @@
 
 const PORT = 3000;
-const URL_REQUEST = "https://mydragon.herokuapp.com";
+const URL_REQUEST = "https://media-dragon.herokuapp.com/";
 
 new Vue ({
     el: "#app",
@@ -102,7 +102,7 @@ new Vue ({
             this.description = list.description; 
             this.getName = list.author;  
             this.img = list.image;
-            if (list.image !== "") {
+            if (list.image !== "" || this.file !== "") {
                 this.discarded = true;
             }
         },
@@ -121,7 +121,7 @@ new Vue ({
                 author: this.getName,
                 date: dateTime,
                 description: this.description,
-                image: this.file.name
+                image: this.file
             }
             axios.put(this.URL + "/posts/" + id, new_inof).then((response) => {
                 this.lists = response.data;
