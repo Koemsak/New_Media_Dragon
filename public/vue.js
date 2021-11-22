@@ -1,6 +1,6 @@
 
 const PORT = 3000;
-const URL_REQUEST = "https://media-dragon.herokuapp.com/";
+const URL_REQUEST = "https://media-dragon.herokuapp.com";
 
 new Vue ({
     el: "#app",
